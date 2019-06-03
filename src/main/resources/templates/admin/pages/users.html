@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/adminLayout::head"></head>
+<head>
+    <title>Dashboard</title>
+</head>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/adminLayout::sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/adminLayout::topbar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">User</h1>
+                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
+                    more information about DataTables, please visit the <a href="https://datatables.net"
+                                                                           target="_blank">official DataTables
+                        documentation</a>.</p>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">User Example</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-bordered" id="dataTable" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="user,iterStat : ${users}">
+                                    <th scope="row" th:text="${iterStat.count}"></th>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td>
+                                        <ul th:each="role,iterStat : ${user.roleModels}">
+                                            <li th:text="${role.name}"> ></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+
+                                        <a class="text-primary" data-toggle="modal"
+                                           th:data-target="'#edit-'+${user.id}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+
+                                        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'edit-'+${user.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Edit User</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="#" method="post"  th:action="@{/admin/users}"
+                                                              th:object="${user}">
+
+                                                            <input name="id" th:value="*{id}" type="hidden"/>
+                                                            <input name="password" th:value="*{password}" type="hidden"/>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="User name"
+                                                                       th:value="*{username}" type="text" name="username"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="First name"
+                                                                       th:value="*{firstName}" type="text" name="firstName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Last Name" th:value="*{lastName}"
+                                                                       type="text" name="lastName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Email" th:value="*{email}"
+                                                                       type="text" name="email"/>
+                                                            </div>
+
+                                                            <select multiple name=”roleModels”>
+                                                                <option th:each="role1,iterStat : ${roles}"
+                                                                        th:value="${role1.id}"
+                                                                        th:text="${role1.name}" >
+                                                                </option>
+                                                            </select>
+
+                                                            <!--<div class="form-group">-->
+                                                            <!--<button class="btn btn-block btn-primary" type="submit">-->
+                                                            <!--<i class="fa fa-save"></i> Save-->
+                                                            <!--</button>-->
+                                                            <!--</div>-->
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" data-dismiss="modal"
+                                                                        type="button">Close
+                                                                </button>
+                                                                <button class="btn btn-primary" type="submit" >Save
+                                                                </button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <!-- Button trigger delete -->
+                                        <a class="text-danger" data- data-toggle="modal"
+                                           th:data-target="'#popup-'+${user.id}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        <!-- Modal -->
+                                        <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'popup-'+${user.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel1">Warning !!!</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         th:text="'Do you want delete '+${user.username}+' ?'">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">No
+                                                        </button>
+                                                        <a class="btn btn-primary"
+                                                           th:href="@{/admin/users/{id}/delete(id=${user.id})}">Yes</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:fragment="admin/adminLayout::footer"></footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div th:replace="admin/adminLayout::logoutModal"></div>
+<section th:replace="admin/adminLayout::js"></section>
+<!-- Page level plugins -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/js/demo/datatables-demo.js}"></script>
+</body>
+</html>
+Collapse
+
+
+

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/adminLayout::head"></head>
+<head>
+    <title>Dashboard</title>
+</head>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/adminLayout::sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/adminLayout::topbar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Supplier</h1>
+                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
+                    more information about DataTables, please visit the <a href="https://datatables.net"
+                                                                           target="_blank">official DataTables
+                        documentation</a>.</p>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Suppliers Example</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <div style="float: right; padding-right: 20px">
+
+                            <button class="text-primary" data-toggle="modal" data-target="#newSupplier" style="padding: 15px 40px 15px 40px; background: beige">
+                                <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                New Supplier
+                            </button>
+
+                            <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                                 role="dialog" tabindex="-1" id="newSupplier">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <form action="#" method="post"  th:action="@{/admin/suppliers}"
+                                                  th:object="${suppliers}">
+                                                <h5 class="text-center">New supplier</h5>
+                                                <div class="form-group">
+                                                    <label>Supplier Name</label>
+                                                    <input class="form-control" placeholder="Supplier name" type="text" name="supplierName"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Contact Name</label>
+                                                    <input class="form-control" placeholder="Contact name" type="text" name="contactName"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <input class="form-control" placeholder="Address" type="text" name="address"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>City</label>
+                                                    <input class="form-control" placeholder="City" type="text" name="city"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Postal code</label>
+                                                    <input class="form-control" placeholder="Postal code" type="text" name="postalCode"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <input class="form-control" placeholder="Country" type="text" name="country"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Phone</label>
+                                                    <input class="form-control" placeholder="Phone" type="text" name="phone"/>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" data-dismiss="modal"
+                                                            type="button">Close
+                                                    </button>
+                                                    <button class="btn btn-primary" type="submit">Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-bordered" id="dataTable" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Supplier Name</th>
+                                    <th>Contact Name</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Postal Code</th>
+                                    <th>Country</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Supplier Name</th>
+                                    <th>Contact Name</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Postal Code</th>
+                                    <th>Country</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="supplier,iterStat : ${suppliers}">
+                                    <th scope="row" th:text="${iterStat.count}"></th>
+                                    <td th:text="${supplier.supplierName}"></td>
+                                    <td th:text="${supplier.contactName}"></td>
+                                    <td th:text="${supplier.address}"></td>
+                                    <td th:text="${supplier.city}"></td>
+                                    <td th:text="${supplier.postalCode}"></td>
+                                    <td th:text="${supplier.country}"></td>
+                                    <td th:text="${supplier.phone}"></td>
+                                    <td>
+                                        <a class="text-primary" data-toggle="modal"
+                                           th:data-target="'#edit-'+${supplier.id}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <div aria-hidden="true" aria-labelledby="editEmployee" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'edit-'+${supplier.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editEmployee">New message</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="#" method="post"  th:action="@{/admin/suppliers}"
+                                                              th:object="${supplier}">
+                                                            <h5 class="text-center">Edit supplier</h5>
+
+                                                            <input name="id"  th:value="*{id}" type="hidden" />
+
+                                                            <div class="form-group">
+                                                                <label>Supplier name</label>
+                                                                <input class="form-control" placeholder="Supplier name"
+                                                                       th:value="*{supplierName}" type="text" name="supplierName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Contact name</label>
+                                                                <input class="form-control" placeholder="Contact name"
+                                                                       th:value="*{contactName}" type="text" name="contactName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Address</label>
+                                                                <input class="form-control" placeholder="Address"
+                                                                       th:value="*{address}" type="text" name="address"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>City</label>
+                                                                <input class="form-control" placeholder="City"
+                                                                       th:value="*{city}" type="text" name="city"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Postal code</label>
+                                                                <input class="form-control" placeholder="Postal code"
+                                                                       th:value="*{postalCode}" type="text" name="postalCode"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Country</label>
+                                                                <input class="form-control" placeholder="Country"
+                                                                       th:value="*{country}" type="text" name="country"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Phone</label>
+                                                                <input class="form-control" placeholder="Phone"
+                                                                       th:value="*{phone}" type="text" name="phone"/>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" data-dismiss="modal"
+                                                                        type="button">Close
+                                                                </button>
+                                                                <button class="btn btn-primary" type="submit">Save
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="text-danger" data- data-toggle="modal"
+                                           th:data-target="'#popup-'+${supplier.id}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        <!-- Modal -->
+                                        <div aria-hidden="true" aria-labelledby="deleteSupplier" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'popup-'+${supplier.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteSupplier">Warning !!!</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         th:text="'Do you want delete '+${supplier.supplierName}+' ?'">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">No
+                                                        </button>
+                                                        <a class="btn btn-primary"
+                                                           th:href="@{/admin/suppliers/{id}/delete(id=${supplier.id})}">Yes</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:fragment="admin/adminLayout::footer"></footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div th:replace="admin/adminLayout::logoutModal"></div>
+<section th:replace="admin/adminLayout::js"></section>
+<!-- Page level plugins -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/js/demo/datatables-demo.js}"></script>
+</body>
+</html>

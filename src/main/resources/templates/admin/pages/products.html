@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/adminLayout::head"></head>
+<head>
+    <title>Dashboard</title>
+</head>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/adminLayout::sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/adminLayout::topbar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Products</h1>
+                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
+                    more information about DataTables, please visit the <a href="https://datatables.net"
+                                                                           target="_blank">official DataTables
+                        documentation</a>.</p>
+
+                <a class="text-primary" data-toggle="modal"
+                   data-target="#newProduct">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span>New Product</span>
+                </a>
+
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                     role="dialog" tabindex="-1" th:id="newProduct">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="#" method="post" novalidate="novalidate" style="min-width: 300px;" th:action="@{/admin/products}" th:object="${products}">
+                                    <h5 class="text-center">Product form</h5>
+
+                                    <div class="form-group">
+                                        <label >Product name</label>
+                                        <input class="form-control" placeholder="Product name"
+                                               type="text" name="productName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input class="form-control" placeholder="Description"
+                                               type="text" name="description"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Images</label>
+                                        <input class="form-control" placeholder="Images"
+                                               type="text" name="urlImage"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Supplier</label>
+                                        <select  name="supplierModel">
+                                            <option th:each="supplier,iterStat : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.supplierName}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select  name="categoryModel">
+                                            <option th:each="category,iterStat : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input class="form-control" placeholder="Price"
+                                               type="text" name="price"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Unit</label>
+                                        <input class="form-control" placeholder="Unit"
+                                               type="text" name="unit"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <input class="form-control" placeholder="Status"
+                                               type="text" name="stt"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                type="button">Close
+                                        </button>
+                                        <button class="btn btn-primary" type="submit">Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Product Information</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-bordered" id="dataTable" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Description</th>
+                                    <th>Images</th>
+                                    <th>Supplier Name</th>
+                                    <th>Category Name</th>
+                                    <th>Price</th>
+                                    <th>Unit</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Description</th>
+                                    <th>Images</th>
+                                    <th>Supplier Name</th>
+                                    <th>Category Name</th>
+                                    <th>Price</th>
+                                    <th>Unit</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="product,iterStat : ${products}">
+                                    <th scope="row" th:text="${iterStat.count}"></th>
+                                    <td th:text="${product.productName}"></td>
+                                    <td th:text="${product.description}"></td>
+                                    <td>
+                                        <img th:src= "${product.urlImage}" style="max-width:50px;max-height:200px" class="img img-thumbnail">
+                                    </td>
+                                    <td th:text="${product.supplierModel.supplierName}"></td>
+                                    <td th:text="${product.categoryModel.categoryName}"></td>
+                                    <td th:text="${product.price}"></td>
+                                    <td th:text="${product.unit}"></td>
+                                    <td th:text="${product.stt}"></td>
+                                    <td>
+
+                                        <a class="text-primary" data-toggle="modal"
+                                           th:data-target="'#edit-'+${product.id}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'edit-'+${product.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <!--<div class="modal-header">-->
+                                                        <!--<h5 class="modal-title" id="exampleModalLabel1">New message</h5>-->
+                                                        <!--<button aria-label="Close" class="close" data-dismiss="modal"-->
+                                                                <!--type="button">-->
+                                                            <!--<span aria-hidden="true">&times;</span>-->
+                                                        <!--</button>-->
+                                                    <!--</div>-->
+                                                    <div class="modal-body">
+                                                        <form action="#" method="post" novalidate="novalidate" style="min-width: 300px;" th:action="@{/admin/products}" th:object="${product}">
+                                                            <h5 class="text-center">Product form</h5>
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-form-label" for="recipient-name">Recipient:</label>-->
+                                                                <!--<input class="form-control" id="recipient-name"-->
+                                                                       <!--type="text">-->
+                                                            <!--</div>-->
+
+                                                            <input name="id"  th:value="*{id}" type="hidden" />
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Product name"
+                                                                       th:value="*{productName}" type="text" name="productName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Product name"
+                                                                       th:value="*{description}" type="text" name="description"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Product name"
+                                                                       th:value="*{urlImage}" type="text" name="urlImage"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Supplier</label>
+                                                                <select  name="supplierModel">
+                                                                    <option th:each="supplier,iterStat : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.supplierName}" th:selected="${supplier.id==product.supplierModel.id}"></option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Category</label>
+                                                                <select  name="categoryModel">
+                                                                    <option th:each="category,iterStat : ${categories}" th:value="${category.id}" th:text="${category.categoryName}" th:selected="${category.id==product.categoryModel.id}"></option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Price"
+                                                                       th:value="*{price}" type="text" name="price"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Unit"
+                                                                       th:value="*{unit}" type="text" name="unit"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Status"
+                                                                       th:value="*{stt}" type="text" name="stt"/>
+                                                            </div>
+
+
+
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">Close
+                                                        </button>
+                                                        <button class="btn btn-primary" type="submit">Save
+                                                        </button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        <!-- Button trigger delete -->
+                                        <a class="text-danger" data- data-toggle="modal"
+                                           th:data-target="'#popup-'+${product.id}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        <!-- Modal -->
+                                        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'popup-'+${product.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Warning !!!</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         th:text="'Do you want delete '+${product.productName}+' ?'">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">No
+                                                        </button>
+                                                        <a class="btn btn-primary"
+                                                           th:href="@{/admin/products/{id}/delete(id=${product.id})}">Yes</a>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+
+        <!-- Footer -->
+        <footer th:fragment="admin/adminLayout::footer"></footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div th:replace="admin/adminLayout::logoutModal"></div>
+<section th:replace="admin/adminLayout::js"></section>
+<!-- Page level plugins -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/js/demo/datatables-demo.js}"></script>
+</body>
+</html>

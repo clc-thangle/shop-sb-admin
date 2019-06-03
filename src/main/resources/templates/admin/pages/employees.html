@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/adminLayout::head"></head>
+<head>
+    <title>Dashboard</title>
+</head>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/adminLayout::sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/adminLayout::topbar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Employees</h1>
+                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
+                    more information about DataTables, please visit the <a href="https://datatables.net"
+                                                                           target="_blank">official DataTables
+                        documentation</a>.</p>
+
+                <a class="text-primary" data-toggle="modal"
+                   data-target="#newEmployee">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span>New Employees</span>
+                </a>
+
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                     role="dialog" tabindex="-1" id="newEmployee">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="#" method="post"  th:action="@{/admin/employees}"
+                                      th:object="${employees}">
+                                    <h5 class="text-center">New employee</h5>
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input class="form-control" placeholder="First name" type="text" name="firstName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input class="form-control" placeholder="Last name" type="text" name="lastName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Birth date</label>
+                                        <input class="form-control" placeholder="Birth date" type="text" name="birthDate"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Notes</label>
+                                        <input class="form-control" placeholder="Notes" type="text" name="notes"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Photo</label>
+                                        <input class="form-control" placeholder="Photo" type="text" name="photo"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                type="button">Close
+                                        </button>
+                                        <button class="btn btn-primary" type="submit">Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Employees Example</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-bordered" id="dataTable" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Birth Day</th>
+                                    <th>Photo</th>
+                                    <th>Notes</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Birth Day</th>
+                                    <th>Photo</th>
+                                    <th>Notes</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="employee,iterStat : ${employees}">
+                                    <th scope="row" th:text="${iterStat.count}"></th>
+                                    <td th:text="${employee.firstName}"></td>
+                                    <td th:text="${employee.lastName}"></td>
+                                    <td th:text="${employee.birthDate}"></td>
+                                    <td th:text="${employee.photo}"></td>
+                                    <td th:text="${employee.notes}"></td>
+                                    <td>
+                                        <a class="text-primary" href="#"
+                                           th:href="@{/employees/{id}/edit(id=${employee.id})}">
+                                            <i class="fa fa-edit"></i>
+
+                                        </a>
+                                        <a class="text-danger" href="#"
+                                           th:href="@{/employees/{id}/delete(id=${employee.id})}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:fragment="admin/adminLayout::footer"></footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div th:replace="admin/adminLayout::logoutModal"></div>
+<section th:replace="admin/adminLayout::js"></section>
+<!-- Page level plugins -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/js/demo/datatables-demo.js}"></script>
+</body>
+</html>

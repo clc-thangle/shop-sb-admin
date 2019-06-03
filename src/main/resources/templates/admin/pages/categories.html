@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/adminLayout::head"></head>
+<head>
+    <title>Dashboard</title>
+</head>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/adminLayout::sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/adminLayout::topbar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Categories</h1>
+                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
+                    more information about DataTables, please visit the <a href="https://datatables.net"
+                                                                           target="_blank">official DataTables
+                        documentation</a>.</p>
+
+                <a class="text-primary" data-toggle="modal"
+                   data-target="#newCategory">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span>New Category</span>
+                </a>
+
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                     role="dialog" tabindex="-1" th:id="newCategory">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="#" method="post" novalidate="novalidate" style="min-width: 300px;" th:action="@{/admin/categories}" th:object="${categories}">
+                                    <h5 class="text-center">Category form</h5>
+
+                                    <div class="form-group">
+                                        <label >Category Name</label>
+                                        <input class="form-control" placeholder="Category name"
+                                               type="text" name="categoryName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input class="form-control" placeholder="Description"
+                                               type="text" name="description"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                type="button">Close
+                                        </button>
+                                        <button class="btn btn-primary" type="submit">Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Categories Example</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table table-bordered" id="dataTable" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="category,iterStat : ${categories}">
+                                    <th scope="row" th:text="${iterStat.count}"></th>
+                                    <td th:text="${category.categoryName}"></td>
+                                    <td th:text="${category.description}"></td>
+                                    <td>
+
+                                        <a class="text-primary" data-toggle="modal"
+                                           th:data-target="'#edit-'+${category.id}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'edit-'+${category.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <!--<div class="modal-header">-->
+                                                    <!--<h5 class="modal-title" id="exampleModalLabel1">New message</h5>-->
+                                                    <!--<button aria-label="Close" class="close" data-dismiss="modal"-->
+                                                    <!--type="button">-->
+                                                    <!--<span aria-hidden="true">&times;</span>-->
+                                                    <!--</button>-->
+                                                    <!--</div>-->
+                                                    <div class="modal-body">
+                                                        <form action="#" method="post" novalidate="novalidate" style="min-width: 300px;" th:action="@{/admin/categories}" th:object="${category}">
+                                                            <h5 class="text-center">Category form</h5>
+
+                                                            <!--<div class="form-group">-->
+                                                            <!--<label class="col-form-label" for="recipient-name">Recipient:</label>-->
+                                                            <!--<input class="form-control" id="recipient-name"-->
+                                                            <!--type="text">-->
+                                                            <!--</div>-->
+
+                                                            <input name="id"  th:value="*{id}" type="hidden" />
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Category name"
+                                                                       th:value="*{categoryName}" type="text" name="categoryName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Description"
+                                                                       th:value="*{description}" type="text" name="description"/>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" data-dismiss="modal"
+                                                                        type="button">Close
+                                                                </button>
+                                                                <button class="btn btn-primary" type="submit">Save
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a class="text-danger" data-toggle="modal"
+                                           th:data-target="'#popup-'+${category.id}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+
+                                        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'popup-'+${category.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Warning !!!</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         th:text="'Do you want delete '+${category.categoryName}+' ?'">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">No
+                                                        </button>
+                                                        <a class="btn btn-primary"
+                                                           th:href="@{/admin/categories/{id}/delete(id=${category.id})}">Yes</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:fragment="admin/adminLayout::footer"></footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div th:replace="admin/adminLayout::logoutModal"></div>
+<section th:replace="admin/adminLayout::js"></section>
+<!-- Page level plugins -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{/webjars/startbootstrap-sb-admin-2/4.0.2/js/demo/datatables-demo.js}"></script>
+</body>
+</html>

@@ -16,4 +16,8 @@
     <include file="config/liquibase/changelog/20190403122028_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190403164552_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190404144204_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/importrole.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190528133028_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190601135123_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190603114612_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

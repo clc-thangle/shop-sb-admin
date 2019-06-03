@@ -53,4 +53,10 @@ public class ProductModel extends BaseModel<ProductModel> {
     @BatchSize(size = 50)
     @JsonBackReference
     private List<OrderDetailModel> orderDetails = new ArrayList<>();
+
+    private String urlImage;
+
+    private String description;
+
+    private String stt;
 }

@@ -23,41 +23,17 @@ public class SupplierController {
         this.supplierService = supplierService;
     }
 
-    @GetMapping("/suppliers")
-    public String list(Model model) {
+    @GetMapping("/admin/suppliers")
+    public String suppliers(Model model) {
         model.addAttribute("suppliers", supplierService.findAll());
-        return "suppliers/list";
+        return "admin/pages/suppliers";
     }
 
-    @GetMapping("suppliers/search")
-    public String search(@RequestParam("term") String term, Model model) {
-        if (StringUtils.isEmpty(term)) {
-            return "redirect:/suppliers";
-        }
-        model.addAttribute("suppliers", supplierService.search(term));
-        return "suppliers/list";
-    }
-
-    @GetMapping("/suppliers/add")
-    public String add(Model model) {
-        model.addAttribute("supplierModel", new SupplierModel());
-        return "suppliers/form";
-    }
-
-    @GetMapping("/suppliers/{id}/edit")
-    public String edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("supplierModel", supplierService.findById(id));
-        return "suppliers/form";
-    }
-
-    @PostMapping("/suppliers/save")
-    public String save(@Valid SupplierModel supplier, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "suppliers/form";
-        }
+    @PostMapping("admin/suppliers")
+    public String save(@Valid SupplierModel supplier, Model model) {
         supplierService.save(supplier);
-        redirect.addFlashAttribute("successMessage", "Saved supplier successfully!");
-        return "redirect:/suppliers";
+        model.addAttribute("suppliers", supplierService.findAll());
+        return "admin/pages/suppliers";
     }
 
     @GetMapping("/suppliers/{id}/delete")

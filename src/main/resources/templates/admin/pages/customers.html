@@ -34,6 +34,63 @@
                                                                            target="_blank">official DataTables
                         documentation</a>.</p>
 
+                <a class="text-primary" data-toggle="modal"
+                   data-target="#newCustomer">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span>New Customer</span>
+                </a>
+
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade"
+                     role="dialog" tabindex="-1" id="newCustomer">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="#" method="post"  th:action="@{/admin/customers}"
+                                      th:object="${customers}">
+                                    <h5 class="text-center">New customer</h5>
+                                    <div class="form-group">
+                                        <label>Customer name</label>
+                                        <input class="form-control" placeholder="Customer name" type="text" name="customerName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Contact name</label>
+                                        <input class="form-control" placeholder="Contact name" type="text" name="contactName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" placeholder="Address" type="text" name="address"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input class="form-control" placeholder="City" type="text" name="city"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Postal code</label>
+                                        <input class="form-control" placeholder="Postal Code" type="text" name="postalCode"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <input class="form-control" placeholder="Country" type="text" name="country"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                type="button">Close
+                                        </button>
+                                        <button class="btn btn-primary" type="submit">Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -76,15 +133,105 @@
                                     <td th:text="${customer.postalCode}"></td>
                                     <td th:text="${customer.country}"></td>
                                     <td>
-                                        <a class="text-primary" href="#"
-                                           th:href="@{/customers/{id}/edit(id=${customer.id})}">
+                                        <a class="text-primary" data-toggle="modal"
+                                           th:data-target="'#edit-'+${customer.id}">
                                             <i class="fa fa-edit"></i>
-
                                         </a>
-                                        <a class="text-danger" href="#"
-                                           th:href="@{/customers/{id}/delete(id=${customer.id})}">
+
+                                        <div aria-hidden="true" aria-labelledby="editCustomer" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'edit-'+${customer.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editCustomer">New message</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="#" method="post"  th:action="@{/admin/customers}"
+                                                              th:object="${customer}">
+
+                                                            <input name="id"  th:value="*{id}" type="hidden" />
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Customer name"
+                                                                       th:value="*{customerName}" type="text" name="customerName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Contact name"
+                                                                       th:value="*{contactName}" type="text" name="contactName"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Address" th:value="*{address}"
+                                                                       type="text" name="address"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="City" th:value="*{city}"
+                                                                       type="text" name="city"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Postal Code" th:value="*{postalCode}"
+                                                                       type="text" name="postalCode"/>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" placeholder="Country" th:value="*{country}"
+                                                                       type="text" name="country"/>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" data-dismiss="modal"
+                                                                        type="button">Close
+                                                                </button>
+                                                                <button class="btn btn-primary" type="submit">Save
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--<a class="text-danger" href="#"-->
+                                           <!--th:href="@{/customers/{id}/delete(id=${customer.id})}">-->
+                                            <!--<i class="fa fa-trash"></i>-->
+                                        <!--</a>-->
+
+                                        <a class="text-danger" data- data-toggle="modal"
+                                           th:data-target="'#popup-'+${customer.id}">
                                             <i class="fa fa-trash"></i>
                                         </a>
+
+                                        <!-- Modal -->
+                                        <div aria-hidden="true" aria-labelledby="deleteCustomer" class="modal fade"
+                                             role="dialog" tabindex="-1" th:id="'popup-'+${customer.id}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteCustomer">Warning !!!</h5>
+                                                        <button aria-label="Close" class="close" data-dismiss="modal"
+                                                                type="button">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         th:text="'Do you want delete '+${customer.customerName}+' ?'">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">No
+                                                        </button>
+                                                        <a class="btn btn-primary"
+                                                           th:href="@{/customers/{id}/delete(id=${customer.id})}">Yes</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
