@@ -732,9 +732,6 @@ debugger;
 		},
 	}
 	$(document).ready(function(){
-		$.when(getApiStore()).then(function () {
-			TCH.init();
-		});
 		new WOW().init();
 	});
 })(jQuery, window);

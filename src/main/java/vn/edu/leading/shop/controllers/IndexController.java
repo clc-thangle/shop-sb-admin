@@ -3,6 +3,7 @@ package vn.edu.leading.shop.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import vn.edu.leading.shop.models.ConfigModel;
 import vn.edu.leading.shop.repositories.ConfigRepository;
 import vn.edu.leading.shop.services.CategoryService;
@@ -11,6 +12,7 @@ import vn.edu.leading.shop.services.ProductService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 
@@ -28,28 +30,20 @@ public class IndexController {
         this.configRepository = configRepository;
     }
 
-    @GetMapping("/home")
-    public String checkout() {
-        return "sublime/checkout";
-    }
-
-    @GetMapping("/index")
-    public String index(Model model) {
-        model.addAttribute("categories",categoryService.findAll());
-        model.addAttribute("products",productService.findAll());
-        return "sublime/index";
-    }
-
     @GetMapping("/")
     public String coffee(Model model) {
-        List<ConfigModel> configList = configRepository.findAll();
-        Map<String, String> configs = new HashMap<>();
-        for(ConfigModel configModel: configList){
-            configs.put(configModel.getName(), configModel.getValue());
-        }
+        Map<String, String> configs = configRepository.findAll().stream().collect(Collectors.toMap(ConfigModel::getName, ConfigModel::getValue));
         model.addAttribute("categories",categoryService.findAll());
         model.addAttribute("products",productService.findAll());
         model.addAttribute("configs", configs);
         return "coffee";
+    }
+
+    @GetMapping("/coffee-detail/{id}")
+    public String coffeeDetails(@PathVariable("id") Long id, Model model) {
+        Map<String, String> configs = configRepository.findAll().stream().collect(Collectors.toMap(ConfigModel::getName, ConfigModel::getValue));
+        model.addAttribute("productModel",productService.findById(id));
+        model.addAttribute("configs", configs);
+        return "coffee-detail";
     }
 }
