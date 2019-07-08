@@ -12,9 +12,9 @@ public interface OrderDetailService {
 
     Optional<OrderDetailModel> findById(Long id);
 
-    boolean update(OrderDetailModel orderDetail);
+    Boolean update(OrderDetailModel orderDetail);
 
     OrderDetailModel save(OrderDetailModel orderDetail);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

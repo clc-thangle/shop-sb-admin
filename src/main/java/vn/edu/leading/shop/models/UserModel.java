@@ -43,7 +43,7 @@ public class UserModel extends BaseModel<UserModel> {
 
     @NotNull
     @Column(nullable = false)
-    private boolean activated = false;
+    private Boolean activated = false;
 
     @Size(min = 2, max = 6)
     @Column(name = "lang_key", length = 6)

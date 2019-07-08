@@ -13,9 +13,9 @@ public interface EmployeeService {
 
     Optional<EmployeeModel> findById(Long id);
 
-    boolean update(EmployeeModel employee);
+    Boolean update(EmployeeModel employee);
 
     EmployeeModel save(EmployeeModel employee);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

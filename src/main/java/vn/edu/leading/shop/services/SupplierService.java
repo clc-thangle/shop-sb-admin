@@ -13,9 +13,9 @@ public interface SupplierService {
 
     Optional<SupplierModel> findById(Long id);
 
-    boolean update(SupplierModel supplier);
+    Boolean update(SupplierModel supplier);
 
     SupplierModel save(SupplierModel supplier);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

@@ -13,9 +13,9 @@ public interface CustomerService {
 
     Optional<CustomerModel> findById(Long id);
 
-    boolean update(CustomerModel customer);
+    Boolean update(CustomerModel customer);
 
     CustomerModel save(CustomerModel customer);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

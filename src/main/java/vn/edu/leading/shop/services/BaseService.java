@@ -54,7 +54,7 @@ public class BaseService<T extends BaseModel<T>> implements Serializable {
     }
 
     @Transactional
-    public boolean delete(Long id) {
+    public Boolean delete(Long id) {
         T entity = findById(id).orElse(null);
         if (entity == null)
             return false;
@@ -96,7 +96,7 @@ public class BaseService<T extends BaseModel<T>> implements Serializable {
         return baseRepository.count();
     }
 
-    public boolean update(T entity) {
+    public Boolean update(T entity) {
         T t = baseRepository.findById(entity.getId()).orElse(null);
         if (t == null)
             return false;

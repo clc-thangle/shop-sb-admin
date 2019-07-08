@@ -1023,7 +1023,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
                 <div class="logo_wrap">
-                    <a class="logo" href="https://www.thecoffeehouse.com/" title="the coffee house">
+                    <a class="logo" href="http://localhost:8080">
                         <h1 style="color: white" th:text="${configs.get('name_shop')}"></h1>
                     </a>
                     <h2 class="hidden"><a class="logo-name" href="https://www.thecoffeehouse.com/"
@@ -1036,12 +1036,12 @@
                 <ul class="clearfix">
 
                     <li>
-                        <a href="https://www.thecoffeehouse.com/pages/cau-chuyen-thuong-hieu"
-                           title="Câu chuyện thương hiệu">Câu chuyện thương hiệu</a>
+                        <a href="http://facebook.com.traigankta"
+                           title="Câu chuyện thương hiệu">Câu chuyện của Thắng</a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a th:href="@{cart}">
                             <i class="fa fa-shopping-cart cart-icon"></i>
                             <span id="id-cua-gio-hang">
                             </span>

@@ -13,9 +13,9 @@ public interface CategoryService {
 
     Optional<CategoryModel> findById(Long id);
 
-    boolean update(CategoryModel category);
+    Boolean update(CategoryModel category);
 
     CategoryModel save(CategoryModel category);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

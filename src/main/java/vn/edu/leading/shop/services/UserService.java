@@ -13,11 +13,13 @@ public interface UserService {
 
     Optional<UserModel> findById(Long id);
 
-    boolean update(UserModel userModel);
+    Optional<UserModel> findByUsername(String username);
+
+    Boolean update(UserModel userModel);
 
     UserModel save(UserModel userModel);
 
     void register(UserModel userModel) throws Exception;
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

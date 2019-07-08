@@ -13,9 +13,9 @@ public interface RoleService {
 
     Optional<RoleModel> findById(Long id);
 
-    boolean update(RoleModel roleModel);
+    Boolean update(RoleModel roleModel);
 
     RoleModel save(RoleModel roleModel);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

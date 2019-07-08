@@ -70,7 +70,7 @@ public class UserController {
         return "admin/pages/users";
     }
 
-    @GetMapping("/admin/{id}/pages/delete")
+    @GetMapping("/admin/users/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes,Model model)
     {
         if(userService.delete(id))

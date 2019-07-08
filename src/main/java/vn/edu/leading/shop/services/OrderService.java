@@ -14,9 +14,9 @@ public interface OrderService {
 
     Optional<OrderModel> findById(Long id);
 
-    boolean update(OrderModel order);
+    Boolean update(OrderModel order);
 
     OrderModel save(OrderModel order);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

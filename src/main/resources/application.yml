@@ -17,3 +17,7 @@ spring:
 server:
   port: 8080
   use-forward-headers: true
+### App Properties
+app:
+  jwtSecret: E286115114967D4F9A82BF2C292E4
+  jwtExprirationInMs: 604800000

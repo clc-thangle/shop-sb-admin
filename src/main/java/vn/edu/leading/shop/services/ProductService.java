@@ -14,9 +14,9 @@ public interface ProductService {
 
     Optional<ProductModel> findById(Long id);
 
-    boolean update(ProductModel product);
+    Boolean update(ProductModel product);
 
     ProductModel save(ProductModel product);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

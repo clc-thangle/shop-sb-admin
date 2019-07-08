@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 import vn.edu.leading.shop.models.BaseModel;
-import vn.edu.leading.shop.repositories.BaseRepository;
 import vn.edu.leading.shop.services.BaseService;
 
 import javax.persistence.EntityManager;
@@ -22,16 +21,9 @@ public class BaseController<T extends BaseModel<T>> {
     @Autowired
     public TransactionTemplate transactionTemplate;
 
-    protected BaseRepository<T, ?> baseRepository;
-
     protected BaseService<T> baseService;
 
-    public BaseController(BaseRepository<T, ?> baseRepository, BaseService<T> baseService) {
-        this.baseRepository = baseRepository;
+    public BaseController(BaseService<T> baseService) {
         this.baseService = baseService;
-    }
-
-    public BaseRepository<T, ?> getBaseRepository() {
-        return baseRepository;
     }
 }

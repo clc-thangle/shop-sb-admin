@@ -13,9 +13,9 @@ public interface ShipperService {
 
     Optional<ShipperModel> findById(Long id);
 
-    boolean update(ShipperModel shipper);
+    Boolean update(ShipperModel shipper);
 
     ShipperModel save(ShipperModel shipper);
 
-    boolean delete(Long id);
+    Boolean delete(Long id);
 }

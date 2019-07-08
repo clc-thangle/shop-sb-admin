@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseModel<T extends BaseModel<T>> implements Persistable, Serializable {
+public class BaseModel<T extends BaseModel<T>> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,10 +21,4 @@ public class BaseModel<T extends BaseModel<T>> implements Persistable, Serializa
     @Setter
     @Getter
     protected Long id;
-
-    @Override
-    @Transient
-    public boolean isNew() {
-        return null == this.getId();
-    }
 }

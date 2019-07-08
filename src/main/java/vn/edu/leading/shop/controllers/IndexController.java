@@ -46,4 +46,12 @@ public class IndexController {
         model.addAttribute("configs", configs);
         return "coffee-detail";
     }
+
+    @GetMapping("/cart")
+    public String cart( Model model) {
+        Map<String, String> configs = configRepository.findAll().stream().collect(Collectors.toMap(ConfigModel::getName, ConfigModel::getValue));
+        model.addAttribute("productModel",productService.findAll());
+        model.addAttribute("configs", configs);
+        return "cart";
+    }
 }

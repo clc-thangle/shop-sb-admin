@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::head">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+            font-family: 'Inconsolata', monospace;
+            background-color: #fff;
+        }
+        .header {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            top: 0;
+            position: fixed;
+            z-index: 1;
+            border-bottom: solid .1px #fff;
+            color: #fff;
+            border: none;
+        }
+        .header-div-container {
+            display: block;
+            margin: 0 250px;
+        }
+        .header-title {
+            display: inline-block;
+            left: 0;
+        }
+        .header-title h4 {
+            font-style: italic;
+            margin: 18px 18px 0;
+        }
+        .header-nav {
+            display: inline-block;
+            text-align: center;
+        }
+        .header-nav ul {
+            padding: 0;
+            margin: 18px 0 0;
+        }
+        .header-nav li {
+            list-style: none;
+            display: inline-block;
+        }
+        .header-nav a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            color:  #fff;
+            text-transform: uppercase;
+            border: none;
+            display: inline-block;
+            padding: 0 16px;
+            vertical-align: middle;
+            overflow: hidden;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .header-nav a:hover {
+            background-color: #ccc;
+            color: #000;
+        }
+
+
+        .header-user {
+            display: inline-block;
+            text-align: center;
+        }
+        .header-user h4 {
+            color: #fff;
+        }
+
+
+        .header-cart {
+            display: inline-block;
+            text-align: center;
+        }
+        .header-cart h4 {
+            display: inline-block;
+            margin: 8px 0;
+        }
+        .header-cart i {
+            color: #fff;
+        }
+        .header-border {
+            border: solid 1px #EA8025;
+            margin: 8px;
+        }
+        .fa-shopping-cart {
+            font-size: 24px;
+            display: inline-block;
+        }
+        .fa-user, .fa-search {
+            color: #fff;
+        }
+
+        .fa-trash , .fa-credit-card {
+            padding-right: 10px;
+        }
+
+        form {
+            display: inline-block;
+        }
+        button[type=text]
+        {
+            height: 50px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: "Open Sans";
+            text-transform: uppercase;
+            color: #696666;
+            background-color: #fff;
+            border-radius: 2em;
+            border: 0.15em solid #F9C23C;
+            cursor: pointer;
+            transition: all 0.3s ease 0s;
+            outline: none;
+        }
+        button[type="text"]:hover {
+            color: #fff;
+            background-color: #EAA502;
+            border-color: #EAA502;
+            transition: all 0.3s ease;
+        }
+        .add-to-cart-table {
+            float: left;
+            width: 100%;
+            background-color: #ffffff;
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body class="body">
+<header class="header" th:replace="layout::header"></header>
+<div class="content" style="margin-top: 60px">
+    <div class="container" style="padding: 0; margin: 30px 0 100px;">
+        <div class="add-to-cart-table">
+            <div class="table-cart">
+                <table class="table table-bordered" id="table-products">
+                    <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>PRICE</th>
+                        <th>QUANTITY</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="btn-div">
+                <form>
+                    <button type="text"><i class="fa fa-credit-card" aria-hidden="true"></i> Checkout</button>
+                </form>
+                <form>
+                    <button type="text" id="btn-clear"><i class="fa fa-trash" aria-hidden="true"></i> Clear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    // Định nghĩa một mảng các phần tử sẽ bỏ vào giỏ hàng
+    var cart = [];
+
+    $(document).ready(function () {
+        // Kiểm tra nếu đã có sessionStorage["shopping-cart-items"] hay chưa?
+        if (sessionStorage["shopping-cart-items"] != null) {
+            cart = JSON.parse(sessionStorage["shopping-cart-items"].toString());
+        }
+
+        // Hiển thị thông tin từ giỏ hàng
+        displaycart();
+    });
+
+
+    // Sự kiện click các button có class=".add-to-cart"
+    $(".add-to-cart").click(function () {
+        var button = $(this); // Lấy đối tượng button mà người dùng click
+        var id = button.attr("id"); // id của sản phẩm là id của button
+        var name = button.attr("data-name"); // name của sản phẩm là thuộc tính data-name của button
+        var price = button.attr("data-price"); // price của sản phẩm là thuộc tính data-price của button
+        var quantity = 1; // Số lượng
+
+
+        var item = {
+            id: id,
+            name: name,
+            price: price,
+            quantity: quantity
+        };
+
+        var exists = false;
+        if (cart.length > 0) {
+            $.each(cart, function (index, value) {
+                // Nếu mặt hàng đã tồn tại trong giỏ hàng thì chỉ cần tăng số lượng mặt hàng đó trong giỏ hàng.
+                if (value.id == item.id) {
+                    value.quantity++;
+                    exists = true;
+                    return false;
+                }
+            });
+        }
+
+        // Nếu mặt hàng chưa tồn tại trong giỏ hàng thì bổ sung vào mảng
+        if (!exists) {
+            cart.push(item);
+        }
+
+        // Lưu thông tin vào sessionStorage
+        sessionStorage["shopping-cart-items"] = JSON.stringify(cart); // Chuyển thông tin mảng cart sang JSON trước khi lưu vào sessionStorage
+        // Gọi hàm hiển thị giỏ hàng
+        displaycart();
+    });
+
+    // Xóa hết giỏ hàng cart
+    $("#btn-clear").click(function () {
+        cart = [];
+        sessionStorage["shopping-cart-items"] = JSON.stringify(cart);
+        $("#id-cua-gio-hang").text("0");
+        displaycart();
+    });
+
+
+    // Hiển thị giỏ hàng ra table
+    function displaycart() {
+        if (sessionStorage["shopping-cart-items"] != null) {
+            cart = JSON.parse(sessionStorage["shopping-cart-items"].toString()); // Chuyển thông tin từ JSON trong sessionStorage sang mảng cart.
+
+            var sum = 0;
+            $.each(cart,function(index,item) {
+                sum+=item.quantity;
+            });
+            $("#id-cua-gio-hang").text(sum);
+            $("#table-products > tbody").html("");//cart-text
+            // Duyệt qua mảng cart để append từng item dòng vào table
+            $.each(cart, function (index, item) {
+                var htmlString = "";
+                htmlString += "<tr>";
+                htmlString += "<td>" + item.name + "</td>";
+                htmlString += "<td style='text-align: right'>" + item.price + "</td>";
+                htmlString += "<td style='text-align: right'>" + item.quantity + "</td>";
+                htmlString += "<td style='text-align: right'>" + item.price * item.quantity + "</td>";
+                htmlString += "</tr>";
+
+                $("#table-products > tbody:last").append(htmlString);
+
+            });
+        }
+    }
+</script>

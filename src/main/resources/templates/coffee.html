@@ -30,11 +30,11 @@
                                       th:text="${category.categoryName}"></span>
                         </h3>
                         <div class="flex_wrap display_flex menu_lists">
-                            <div class="menu_item" th:each="product,iStat : ${category.getProducts()}">
-                                <div class="menu_item_image">
-                                    <a th:href="@{/coffee-detail/{id}(id=${product.id})}" title=""><img
-                                            th:alt="${product.productName}" th:src="${product.urlImage}"></a>
-                                    <span th:switch="${product.stt}">
+                                    <div class="menu_item" th:each="product,iStat : ${category.getProducts()}">
+                                        <div class="menu_item_image">
+                                            <a th:href="@{/coffee-detail/{id}(id=${product.id})}" title=""><img
+                                                    th:alt="${product.productName}" th:src="${product.urlImage}"></a>
+                                            <span th:switch="${product.stt}">
                                                 <span th:case="${'new'}" class="new"><img class="svg-new" src="//file.hstatic.net/1000075078/file/orion_sheriff-star.svg" alt="" /><span>NEW</span></span>
                                                 <span th:case="${'best_seller'}" class="best_seller"><img class="svg-best-seller" src="//file.hstatic.net/1000075078/file/orion_diploma.svg" alt="" /><span>BEST SELLER</span></span>
                                                 <span th:case="*">
@@ -43,7 +43,7 @@
 
                                 </div>
                                 <div class="menu_item_info bg_white">
-                                    <h3><a href="https://www.thecoffeehouse.com/products/americano-1"
+                                    <h3><a th:href="@{/coffee-detail/{id}(id=${product.id})}" title=""
                                            th:text="${product.productName}"></a>
                                     </h3>
                                     <div class="price_product_item" th:text="${product.price}"></div>

@@ -10,6 +10,7 @@ import vn.edu.leading.shop.repositories.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -30,6 +31,11 @@ public class UserServicelmpl extends BaseService<UserModel> implements UserServi
     @Override
     public List<UserModel> search(String term) {
         return baseRepository.findByAttributeContainsText("username", term);
+    }
+
+    @Override
+    public Optional<UserModel> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
